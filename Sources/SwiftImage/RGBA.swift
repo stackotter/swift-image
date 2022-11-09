@@ -3,7 +3,7 @@ public struct RGBA<Channel> {
     public var green: Channel
     public var blue: Channel
     public var alpha: Channel
-    
+
     public init(red: Channel, green: Channel, blue: Channel, alpha: Channel) {
         self.red = red
         self.green = green
@@ -18,7 +18,7 @@ extension RGBA { // Additional initializers
     }
 }
 
-extension RGBA where Channel : UnsignedInteger & FixedWidthInteger {
+extension RGBA where Channel: UnsignedInteger & FixedWidthInteger {
     public init(red: Channel, green: Channel, blue: Channel) {
         self.init(red: red, green: green, blue: blue, alpha: .max)
     }
@@ -28,16 +28,16 @@ extension RGBA where Channel : UnsignedInteger & FixedWidthInteger {
     }
 }
 
-extension RGBA where Channel : _NumericPixel & UnsignedInteger & FixedWidthInteger, Channel._ez_AdditiveInt : FixedWidthInteger {
+extension RGBA where Channel: _NumericPixel & UnsignedInteger & FixedWidthInteger, Channel._ez_AdditiveInt: FixedWidthInteger {
     public init(_ premultipliedRGBA: PremultipliedRGBA<Channel>) {
         guard premultipliedRGBA.alpha > 0 else {
             self.init(red: 0, green: 0, blue: 0, alpha: 0)
             return
         }
-        
+
         let numericAlpha: Channel._ez_AdditiveInt = premultipliedRGBA.alpha._ez_additiveInt
         let numericMaxAlpha: Channel._ez_AdditiveInt = Channel.max._ez_additiveInt
-        
+
         self.init(
             red: .init(_ez_additiveInt: premultipliedRGBA.red._ez_additiveInt * numericMaxAlpha / numericAlpha),
             green: .init(_ez_additiveInt: premultipliedRGBA.green._ez_additiveInt * numericMaxAlpha / numericAlpha),
@@ -47,21 +47,21 @@ extension RGBA where Channel : _NumericPixel & UnsignedInteger & FixedWidthInteg
     }
 }
 
-extension RGBA where Channel : FloatingPoint {
+extension RGBA where Channel: FloatingPoint {
     public init(red: Channel, green: Channel, blue: Channel) {
         self.init(red: red, green: green, blue: blue, alpha: 1)
     }
-    
+
     public init(_ rgb: RGB<Channel>) {
         self.init(red: rgb.red, green: rgb.green, blue: rgb.blue, alpha: 1)
     }
-    
+
     public init(_ premultipliedRgba: PremultipliedRGBA<Channel>) {
         guard premultipliedRgba.alpha != 0 else {
             self.init(red: 0, green: 0, blue: 0, alpha: 0)
             return
         }
-        
+
         self.init(
             red: premultipliedRgba.red / premultipliedRgba.alpha,
             green: premultipliedRgba.green / premultipliedRgba.alpha,
@@ -144,62 +144,62 @@ extension RGBA where Channel: UnsignedInteger & FixedWidthInteger {
     public static var red: RGBA<Channel> {
         return RGBA<Channel>(red: .max, green: .zero, blue: .zero, alpha: .max)
     }
-    
+
     @inlinable
     public static var green: RGBA<Channel> {
         return RGBA<Channel>(red: .zero, green: .max, blue: .zero, alpha: .max)
     }
-    
+
     @inlinable
     public static var blue: RGBA<Channel> {
         return RGBA<Channel>(red: .zero, green: .zero, blue: .max, alpha: .max)
     }
-    
+
     @inlinable
     public static var cyan: RGBA<Channel> {
         return RGBA<Channel>(red: .zero, green: .max, blue: .max, alpha: .max)
     }
-    
+
     @inlinable
     public static var magenta: RGBA<Channel> {
         return RGBA<Channel>(red: .max, green: .zero, blue: .max, alpha: .max)
     }
-    
+
     @inlinable
     public static var yellow: RGBA<Channel> {
         return RGBA<Channel>(red: .max, green: .max, blue: .zero, alpha: .max)
     }
-    
+
     @inlinable
     public static var black: RGBA<Channel> {
         return RGBA<Channel>(red: .zero, green: .zero, blue: .zero, alpha: .max)
     }
-    
+
     @inlinable
     public static var white: RGBA<Channel> {
         return RGBA<Channel>(red: .max, green: .max, blue: .max, alpha: .max)
     }
-    
+
     @inlinable
     public static var gray: RGBA<Channel> {
         return RGBA<Channel>(red: .max / 2, green: .max / 2, blue: .max / 2, alpha: .max)
     }
-    
+
     @inlinable
     public static var orange: RGBA<Channel> {
         return RGBA<Channel>(red: .max, green: .max / 2, blue: .zero, alpha: .max)
     }
-    
+
     @inlinable
     public static var purple: RGBA<Channel> {
         return RGBA<Channel>(red: .max / 2, green: .zero, blue: .max / 2, alpha: .max)
     }
-    
+
     @inlinable
     public static var clear: RGBA<Channel> {
         return RGBA<Channel>(red: .zero, green: .zero, blue: .zero, alpha: .zero)
     }
-    
+
     @inlinable
     @available(*, deprecated, message: "User `clear` instead.")
     public static var transparent: RGBA<Channel> {
@@ -212,62 +212,62 @@ extension RGBA where Channel: FloatingPoint {
     public static var red: RGBA<Channel> {
         return RGBA<Channel>(red: 1, green: 0, blue: 0, alpha: 1)
     }
-    
+
     @inlinable
     public static var green: RGBA<Channel> {
         return RGBA<Channel>(red: 0, green: 1, blue: 0, alpha: 1)
     }
-    
+
     @inlinable
     public static var blue: RGBA<Channel> {
         return RGBA<Channel>(red: 0, green: 0, blue: 1, alpha: 1)
     }
-    
+
     @inlinable
     public static var cyan: RGBA<Channel> {
         return RGBA<Channel>(red: 0, green: 1, blue: 1, alpha: 1)
     }
-    
+
     @inlinable
     public static var magenta: RGBA<Channel> {
         return RGBA<Channel>(red: 1, green: 0, blue: 1, alpha: 1)
     }
-    
+
     @inlinable
     public static var yellow: RGBA<Channel> {
         return RGBA<Channel>(red: 1, green: 1, blue: 0, alpha: 1)
     }
-    
+
     @inlinable
     public static var black: RGBA<Channel> {
         return RGBA<Channel>(red: 0, green: 0, blue: 0, alpha: 1)
     }
-    
+
     @inlinable
     public static var white: RGBA<Channel> {
         return RGBA<Channel>(red: 1, green: 1, blue: 1, alpha: 1)
     }
-    
+
     @inlinable
     public static var gray: RGBA<Channel> {
         return RGBA<Channel>(red: 1 / 2, green: 1 / 2, blue: 1 / 2, alpha: 1)
     }
-    
+
     @inlinable
     public static var orange: RGBA<Channel> {
         return RGBA<Channel>(red: 1, green: 1 / 2, blue: 0, alpha: 1)
     }
-    
+
     @inlinable
     public static var purple: RGBA<Channel> {
         return RGBA<Channel>(red: 1 / 2, green: 0, blue: 1 / 2, alpha: 1)
     }
-    
+
     @inlinable
     public static var clear: RGBA<Channel> {
         return RGBA<Channel>(red: 0, green: 0, blue: 0, alpha: 0)
     }
-    
+
     @inlinable
     @available(*, deprecated, message: "User `clear` instead.")
     public static var transparent: RGBA<Channel> {
@@ -300,19 +300,19 @@ extension RGBA {
     }
 }
 
-extension RGBA : Equatable where Channel : Equatable {
+extension RGBA: Equatable where Channel: Equatable {
     @inlinable
     public static func ==(lhs: RGBA<Channel>, rhs: RGBA<Channel>) -> Bool {
         return lhs.red == rhs.red && lhs.green == rhs.green && lhs.blue == rhs.blue && lhs.alpha == rhs.alpha
     }
-    
+
     @inlinable
     public static func !=(lhs: RGBA<Channel>, rhs: RGBA<Channel>) -> Bool {
         return lhs.red != rhs.red || lhs.green != rhs.green || lhs.blue != rhs.blue || lhs.alpha != rhs.alpha
     }
 }
 
-extension RGBA : CustomStringConvertible {
+extension RGBA: CustomStringConvertible {
     public var description: String {
         if let zelf = self as? RGBA<UInt8> {
             return String(format: "#%02X%02X%02X%02X", arguments: [zelf.red, zelf.green, zelf.blue, zelf.alpha])
@@ -322,7 +322,7 @@ extension RGBA : CustomStringConvertible {
     }
 }
 
-extension RGBA : CustomDebugStringConvertible {
+extension RGBA: CustomDebugStringConvertible {
     public var debugDescription: String {
         return description
     }
@@ -332,23 +332,23 @@ extension RGBA: AdditiveArithmetic where Channel: AdditiveArithmetic {
     @inlinable
     public static var zero: RGBA<Channel> {
         return RGBA<Channel>(
-            red  : .zero,
+            red: .zero,
             green: .zero,
-            blue : .zero,
+            blue: .zero,
             alpha: .zero
         )
     }
-    
+
     @inlinable
     public static func +(_ lhs: RGBA<Channel>, _ rhs: RGBA<Channel>) -> RGBA<Channel> {
         return RGBA<Channel>(
-            red  : lhs.red   + rhs.red,
+            red: lhs.red   + rhs.red,
             green: lhs.green + rhs.green,
-            blue : lhs.blue  + rhs.blue,
+            blue: lhs.blue  + rhs.blue,
             alpha: lhs.alpha + rhs.alpha
         )
     }
-    
+
     @inlinable
     public static func +=(_ lhs: inout RGBA<Channel>, _ rhs: RGBA<Channel>) {
         lhs.red   += rhs.red
@@ -356,17 +356,17 @@ extension RGBA: AdditiveArithmetic where Channel: AdditiveArithmetic {
         lhs.blue  += rhs.blue
         lhs.alpha += rhs.alpha
     }
-    
+
     @inlinable
     public static func -(_ lhs: RGBA<Channel>, _ rhs: RGBA<Channel>) -> RGBA<Channel> {
         return RGBA<Channel>(
-            red  : lhs.red   - rhs.red,
+            red: lhs.red   - rhs.red,
             green: lhs.green - rhs.green,
-            blue : lhs.blue  - rhs.blue,
+            blue: lhs.blue  - rhs.blue,
             alpha: lhs.alpha - rhs.alpha
         )
     }
-    
+
     @inlinable
     public static func -=(_ lhs: inout RGBA<Channel>, _ rhs: RGBA<Channel>) {
         lhs.red   -= rhs.red
@@ -387,7 +387,7 @@ extension RGBA where Channel == UInt8 {
             red = UInt8(newValue)
         }
     }
-    
+
     public var greenInt: Int {
         @available(*, deprecated, message: "Replace `rgba.greenInt` with `Int(rgba.green)`.")
         get {
@@ -398,7 +398,7 @@ extension RGBA where Channel == UInt8 {
             green = UInt8(newValue)
         }
     }
-    
+
     public var blueInt: Int {
         @available(*, deprecated, message: "Replace `rgba.blueInt` with `Int(rgba.blue)`.")
         get {
@@ -409,7 +409,7 @@ extension RGBA where Channel == UInt8 {
             blue = UInt8(newValue)
         }
     }
-    
+
     public var alphaInt: Int {
         @available(*, deprecated, message: "Replace `rgba.alphaInt` with `Int(rgba.alpha)`.")
         get {
@@ -438,7 +438,7 @@ extension RGBA where Channel == UInt16 {
             red = UInt16(newValue)
         }
     }
-    
+
     public var greenInt: Int {
         @available(*, deprecated, message: "Replace `rgba.greenInt` with `Int(rgba.green)`.")
         get {
@@ -449,7 +449,7 @@ extension RGBA where Channel == UInt16 {
             green = UInt16(newValue)
         }
     }
-    
+
     public var blueInt: Int {
         @available(*, deprecated, message: "Replace `rgba.blueInt` with `Int(rgba.blue)`.")
         get {
@@ -460,7 +460,7 @@ extension RGBA where Channel == UInt16 {
             blue = UInt16(newValue)
         }
     }
-    
+
     public var alphaInt: Int {
         @available(*, deprecated, message: "Replace `rgba.alphaInt` with `Int(rgba.alpha)`.")
         get {

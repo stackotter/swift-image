@@ -11,7 +11,7 @@ class RGBATests: XCTestCase {
             XCTAssertEqual(a.alpha, 4)
         }
     }
-    
+
     func testInitWithGray() {
         do {
             let a = RGBA<UInt8>(gray: 127, alpha: 255)
@@ -21,21 +21,21 @@ class RGBATests: XCTestCase {
             XCTAssertEqual(a.alpha, 255)
         }
     }
-    
+
     func testInitWithRGB() {
         do {
             let a = RGB<UInt8>(red: 1, green: 2, blue: 254)
             let r = RGBA<UInt8>(a)
             XCTAssertEqual(r, RGBA<UInt8>(red: 1, green: 2, blue: 254, alpha: 255))
         }
-        
+
         do {
             let a = RGB<Double>(red: 0.2, green: 0.4, blue: 0.6)
             let r = RGBA<Double>(a)
             XCTAssertEqual(r, RGBA<Double>(red: 0.2, green: 0.4, blue: 0.6, alpha: 1.0))
         }
     }
-    
+
     func testInitWithPremultipliedRGBA() {
         do {
             let a: PremultipliedRGBA<UInt8> = PremultipliedRGBA<UInt8>(red: 1, green: 2, blue: 4, alpha: 127)
@@ -58,7 +58,7 @@ class RGBATests: XCTestCase {
             XCTAssertEqual(r.alpha, 204)
         }
     }
-    
+
     func testInitForCasting() {
         // let types = ["Int", "Int8", "Int16", "Int32", "Int64", "UInt", "UInt8", "UInt16", "UInt32", "UInt64", "Float", "Double"]
         // for from in types {
@@ -691,7 +691,7 @@ class RGBATests: XCTestCase {
             }
         }
     }
-    
+
     func testRed() {
         do {
             let a: RGBA<UInt8> = .red
@@ -702,7 +702,7 @@ class RGBATests: XCTestCase {
             XCTAssertEqual(a, RGBA<Double>(red: 1, green: 0, blue: 0, alpha: 1))
         }
     }
-    
+
     func testGreen() {
         do {
             let a: RGBA<UInt8> = .green
@@ -713,7 +713,7 @@ class RGBATests: XCTestCase {
             XCTAssertEqual(a, RGBA<Double>(red: 0, green: 1, blue: 0, alpha: 1))
         }
     }
-    
+
     func testBlue() {
         do {
             let a: RGBA<UInt8> = .blue
@@ -724,7 +724,7 @@ class RGBATests: XCTestCase {
             XCTAssertEqual(a, RGBA<Double>(red: 0, green: 0, blue: 1, alpha: 1))
         }
     }
-    
+
     func testCyan() {
         do {
             let a: RGBA<UInt8> = .cyan
@@ -757,7 +757,7 @@ class RGBATests: XCTestCase {
             XCTAssertEqual(a, RGBA<Double>(red: 1, green: 1, blue: 0, alpha: 1))
         }
     }
-    
+
     func testBlack() {
         do {
             let a: RGBA<UInt8> = .black
@@ -768,7 +768,7 @@ class RGBATests: XCTestCase {
             XCTAssertEqual(a, RGBA<Double>(red: 0, green: 0, blue: 0, alpha: 1))
         }
     }
-    
+
     func testWhite() {
         do {
             let a: RGBA<UInt8> = .white
@@ -779,7 +779,7 @@ class RGBATests: XCTestCase {
             XCTAssertEqual(a, RGBA<Double>(red: 1, green: 1, blue: 1, alpha: 1))
         }
     }
-    
+
     func testGray() {
         do {
             let a: RGBA<UInt8> = .gray
@@ -812,7 +812,7 @@ class RGBATests: XCTestCase {
             XCTAssertEqual(a, RGBA<Double>(red: 0.5, green: 0, blue: 0.5, alpha: 1))
         }
     }
-    
+
     func testClear() {
         do {
             let a: RGBA<UInt8> = .clear
@@ -831,33 +831,33 @@ class RGBATests: XCTestCase {
 		XCTAssertEqual("#0A0B0C0D", RGBA<UInt8>(red: 10, green: 11, blue: 12, alpha: 13).description)
 		XCTAssertEqual("#0E0F1011", RGBA<UInt8>(red: 14, green: 15, blue: 16, alpha: 17).description)
 	}
-    
+
     func testInstanceGray() {
         do {
             let p = RGBA<UInt16>(red: .max, green: .max, blue: .max)
             XCTAssertEqual(p.gray, .max)
         }
-        
+
         do {
             let p = RGBA<UInt16>(red: .max, green: .max, blue: .max - 1)
             XCTAssertEqual(p.gray, .max - 1)
         }
-        
+
         do {
             let p = RGBA<UInt16>(red: .max, green: .max, blue: .max - 3)
             XCTAssertEqual(p.gray, .max - 1)
         }
-        
+
         do {
             let p = RGBA<UInt16>(red: .max, green: .max, blue: .max - 4)
             XCTAssertEqual(p.gray, .max - 2)
         }
-        
+
         do {
             let p = RGBA<UInt16>(red: .max, green: .max - 1, blue: .max - 2)
             XCTAssertEqual(p.gray, .max - 1)
         }
-        
+
         do {
             let p = RGBA<UInt16>(red: .max, green: .max - 1, blue: .max - 3)
             XCTAssertEqual(p.gray, .max - 2)

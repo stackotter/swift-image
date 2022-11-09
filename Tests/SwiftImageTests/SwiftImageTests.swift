@@ -25,20 +25,20 @@ class SwiftImageSample: XCTestCase {
         /**/ image[0, 0] = image[0, 0]
         /**/ }
         /**/ var image = Image<RGBA<UInt8>>(width: 1, height: 1, pixel: .black)
-        
+
         let pixel: RGBA<UInt8> = image[x, y]
         image[x, y] = RGBA(red: 255, green: 0, blue: 0, alpha: 127)
         image[x, y] = RGBA(0xFF00007F) // red: 255, green: 0, blue: 0, alpha: 127
-        
+
         // Iterates over all pixels
         for pixel in image {
             // ...
             /**/ _ = pixel.description
         }
-        
+
         // Image processing (e.g. binarizations)
         let binarized: Image<Bool> = image.map { $0.gray >= 127 }
-        
+
         // From/to `UIImage`
         /**/ #if canImport(UIKit)
         image = Image<RGBA<UInt8>>(uiImage: imageView.image!)
@@ -53,8 +53,8 @@ class SwiftImageSample: XCTestCase {
     func testIntroduction() {
         do {
             /**/ if never() {
-            var image: Image<UInt8> = Image(width: 640, height: 480, pixels: [255, 248, /* ... */])
-            
+            var image: Image<UInt8> = Image(width: 640, height: 480, pixels: [255, 248 /* ... */])
+
             /**/ image[0, 0] = 0
             /**/ }
             /**/ var image: Image<UInt8> = Image(width: 1, height: 1, pixel: 0)
@@ -63,7 +63,7 @@ class SwiftImageSample: XCTestCase {
             let pixel: UInt8 = image[x, y]
             image[x, y] = 255
             /**/ _ = pixel
-            
+
             let width: Int = image.width // 640
             let height: Int = image.height // 480
             /**/ _ = width
@@ -76,7 +76,7 @@ class SwiftImageSample: XCTestCase {
             let grayscale: Image<UInt8> = image.map { $0.gray }
             /**/ XCTAssertEqual(grayscale[0, 0], 42)
         }
-        
+
         do {
             /**/ let image = Image<UInt8>(width: 1, height: 1, pixel: 0)
             /**/ let x = 0, y = 0
@@ -87,7 +87,7 @@ class SwiftImageSample: XCTestCase {
             /**/ )
         }
     }
-    
+
     func testInitialization() {
         #if canImport(UIKit)
         do {
@@ -148,33 +148,33 @@ class SwiftImageSample: XCTestCase {
             /**/ _ = image.count
         }
     }
-    
+
     func testAccessToAPixel() {
         /**/ let x = 0
         /**/ let y = 0
         /**/ var image = Image<RGBA<UInt8>>(width: 1, height: 1, pixel: .red)
-        
+
         do {
             // Gets a pixel by subscripts
             let pixel = image[x, y]
             /**/ _ = pixel
         }
-        
+
         /////////////////////////////////
-        
+
         // Sets a pixel by subscripts
         image[x, y] = RGBA(0xFF0000FF)
         image[x, y].alpha = 127
-        
+
         /////////////////////////////////
-        
+
         // Safe get for a pixel
         if let pixel = image.pixelAt(x: x, y: y) {
             print(pixel.red)
             print(pixel.green)
             print(pixel.blue)
             print(pixel.alpha)
-            
+
             print(pixel.gray) // (red + green + blue) / 3
             print(pixel) // formatted like "#FF0000FF"
         } else {
@@ -182,7 +182,7 @@ class SwiftImageSample: XCTestCase {
             print("Out of bounds")
         }
     }
-    
+
     func testRotation() {
         do {
             /**/ let image = Image<UInt8>(width: 1, height: 1, pixel: 0)
@@ -201,37 +201,37 @@ class SwiftImageSample: XCTestCase {
             /**/ _ = result.count
         }
     }
-    
+
     func testResizing() {
         do {
             /**/ let image = Image<UInt8>(width: 1, height: 1, pixel: 0)
             let result = image.resizedTo(width: 320, height: 240)
             /**/ _ = result.count
         }
-        
+
         do {
             /**/ let image = Image<UInt8>(width: 1, height: 1, pixel: 0)
             let result = image.resizedTo(width: 320, height: 240, interpolatedBy: .nearestNeighbor)
             /**/ _ = result.count
         }
     }
-    
+
     func testCropping() {
         /**/ let image = Image<RGBA<UInt8>>(width: 128, height: 128, pixel: .red)
-        
+
         let slice: ImageSlice<RGBA<UInt8>> = image[32..<64, 32..<64] // No copying costs
         let cropped = Image<RGBA<UInt8>>(slice) // Copying is executed here
-        
+
         /**/ _ = cropped.count
     }
     func testWithUIImage() {
         #if canImport(UIKit)
         /**/ if never() {
             /**/ let imageView = UIImageView()
-            
+
             // From `UIImage`
             let image = Image<RGBA<UInt8>>(uiImage: imageView.image!)
-            
+
             // To `UIImage`
             imageView.image = image.uiImage
         /**/ }
@@ -241,10 +241,10 @@ class SwiftImageSample: XCTestCase {
         #if canImport(AppKit)
         /**/ if never() {
             /**/ let imageView = NSImageView()
-            
+
             // From `NSImage`
             let image = Image<RGBA<UInt8>>(nsImage: imageView.image!)
-            
+
             // To `NSImage`
             imageView.image = image.nsImage
         /**/ }
@@ -254,7 +254,7 @@ class SwiftImageSample: XCTestCase {
         #if canImport(UIKit)
         /**/ if never() {
             /**/ let imageView = UIImageView()
-            
+
             // Drawing on images with CoreGraphics
             var image = Image<PremultipliedRGBA<UInt8>>(uiImage: imageView.image!)
             image.withCGContext { context in
@@ -273,4 +273,3 @@ class SwiftImageSample: XCTestCase {
 private func never() -> Bool {
     return false
 }
-

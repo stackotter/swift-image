@@ -10,7 +10,7 @@ private func reminder(_ a: Int, _ b: Int) -> Int {
     return result < 0 ? result + b : result
 }
 
-extension ImageProtocol {
+extension Image {
     public subscript(x: Int, y: Int, extrapolation extrapolationMethod: ExtrapolationMethod<Pixel>) -> Pixel {
         switch extrapolationMethod {
         case .constant(let value):
@@ -34,7 +34,7 @@ extension ImageProtocol {
             )
         }
     }
-    
+
     @usableFromInline
     internal func extrapolatedPixelByFillingAt(x: Int, y: Int, by value: Pixel) -> Pixel {
         guard xRange.contains(x) && yRange.contains(y) else {
@@ -42,19 +42,19 @@ extension ImageProtocol {
         }
         return self[x, y]
     }
-    
+
     @usableFromInline
     internal func extrapolatedPixelByEdgeAt(x: Int, y: Int, xRange: ClosedRange<Int>, yRange: ClosedRange<Int>) -> Pixel {
         return self[clamp(x, lower: xRange.lowerBound, upper: xRange.upperBound), clamp(y, lower: yRange.lowerBound, upper: yRange.upperBound)]
     }
-    
+
     @usableFromInline
     internal func extrapolatedPixelByRepeatAt(x: Int, y: Int, minX: Int, minY: Int, width: Int, height: Int) -> Pixel {
         let x2 = reminder(x - minX, width) + minX
         let y2 = reminder(y - minY, height) + minY
         return self[x2, y2]
     }
-    
+
     @usableFromInline
     internal func extrapolatedPixelByReflectionAt(
         x: Int,
@@ -73,30 +73,5 @@ extension ImageProtocol {
         let x3 = (x2 < width ? x2 : doubleWidthMinusOne - x2) + minX
         let y3 = (y2 < height ? y2 : doubleHeightMinusOne - y2) + minY
         return self[x3, y3]
-    }
-}
-
-extension ImageProtocol {
-    public subscript(xRange: Range<Int>, yRange: Range<Int>, extrapolation extrapolationMethod: ExtrapolationMethod<Pixel>) -> AnyImage<Pixel> {
-        return ExtrapolatedImage<Self>(
-            image: self,
-            extrapolationMethod: extrapolationMethod
-        )[xRange, yRange]
-    }
-    
-    public subscript<R1: RangeExpression, R2: RangeExpression>(xRange: R1, yRange: R2, extrapolation extrapolationMethod: ExtrapolationMethod<Pixel>) -> AnyImage<Pixel> where R1.Bound == Int, R2.Bound == Int {
-        return self[range(from: xRange, relativeTo: self.xRange), range(from: yRange, relativeTo: self.yRange), extrapolation: extrapolationMethod]
-    }
-    
-    public subscript<R1: RangeExpression>(xRange: R1, yRange: UnboundedRange, extrapolation extrapolationMethod: ExtrapolationMethod<Pixel>) -> AnyImage<Pixel> where R1.Bound == Int {
-        return self[range(from: xRange, relativeTo: self.xRange), self.yRange, extrapolation: extrapolationMethod]
-    }
-    
-    public subscript<R2: RangeExpression>(xRange: UnboundedRange, yRange: R2, extrapolation extrapolationMethod: ExtrapolationMethod<Pixel>) -> AnyImage<Pixel> where R2.Bound == Int {
-        return self[self.xRange, range(from: yRange, relativeTo: self.yRange), extrapolation: extrapolationMethod]
-    }
-    
-    public subscript(xRange: UnboundedRange, yRange: UnboundedRange, extrapolation extrapolationMethod: ExtrapolationMethod<Pixel>) -> AnyImage<Pixel> {
-        return self[self.xRange, self.yRange, extrapolation: extrapolationMethod]
     }
 }

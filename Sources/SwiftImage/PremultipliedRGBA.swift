@@ -1,9 +1,9 @@
-public struct PremultipliedRGBA<Channel> where Channel : Numeric{
+public struct PremultipliedRGBA<Channel> where Channel: Numeric {
     public var red: Channel
     public var green: Channel
     public var blue: Channel
     public var alpha: Channel
-    
+
     public init(red: Channel, green: Channel, blue: Channel, alpha: Channel) {
         self.red = red
         self.green = green
@@ -12,17 +12,17 @@ public struct PremultipliedRGBA<Channel> where Channel : Numeric{
     }
 }
 
-extension PremultipliedRGBA where Channel : UnsignedInteger & FixedWidthInteger {
+extension PremultipliedRGBA where Channel: UnsignedInteger & FixedWidthInteger {
     public init(_ rgb: RGB<Channel>) {
         self.init(red: rgb.red, green: rgb.green, blue: rgb.blue, alpha: .max)
     }
 }
 
-extension PremultipliedRGBA where Channel : _NumericPixel & UnsignedInteger & FixedWidthInteger, Channel._ez_AdditiveInt : FixedWidthInteger {
+extension PremultipliedRGBA where Channel: _NumericPixel & UnsignedInteger & FixedWidthInteger, Channel._ez_AdditiveInt: FixedWidthInteger {
     public init(_ rgba: RGBA<Channel>) {
         let numericAlpha: Channel._ez_AdditiveInt = rgba.alpha._ez_additiveInt
         let numericMaxAlpha: Channel._ez_AdditiveInt = Channel.max._ez_additiveInt
-        
+
         self.init(
             red: .init(_ez_additiveInt: rgba.red._ez_additiveInt * numericAlpha / numericMaxAlpha),
             green: .init(_ez_additiveInt: rgba.green._ez_additiveInt * numericAlpha / numericMaxAlpha),
@@ -32,11 +32,11 @@ extension PremultipliedRGBA where Channel : _NumericPixel & UnsignedInteger & Fi
     }
 }
 
-extension PremultipliedRGBA where Channel : FloatingPoint {
+extension PremultipliedRGBA where Channel: FloatingPoint {
     public init(_ rgb: RGB<Channel>) {
         self.init(red: rgb.red, green: rgb.green, blue: rgb.blue, alpha: 1)
     }
-    
+
     public init(_ rgba: RGBA<Channel>) {
         self.init(
             red: rgba.red * rgba.alpha,
@@ -54,7 +54,7 @@ extension PremultipliedRGBA { // Additional initializers
 }
 
 extension PremultipliedRGBA {
-    public func map<T>(_ transform: (Channel) -> T) -> PremultipliedRGBA<T> where T : Numeric {
+    public func map<T>(_ transform: (Channel) -> T) -> PremultipliedRGBA<T> where T: Numeric {
         return PremultipliedRGBA<T>(
             red: transform(red),
             green: transform(green),
@@ -70,24 +70,24 @@ extension PremultipliedRGBA where Channel == UInt8 {
     }
 }
 
-extension PremultipliedRGBA : CustomStringConvertible {
+extension PremultipliedRGBA: CustomStringConvertible {
     public var description: String {
         return "PremultipliedRGBA(red: \(red), green: \(green), blue: \(blue), alpha: \(alpha))"
     }
 }
 
-extension PremultipliedRGBA : CustomDebugStringConvertible {
+extension PremultipliedRGBA: CustomDebugStringConvertible {
     public var debugDescription: String {
         return description
     }
 }
 
-extension PremultipliedRGBA : Equatable where Channel : Equatable {
+extension PremultipliedRGBA: Equatable where Channel: Equatable {
     @inlinable
     public static func ==(lhs: PremultipliedRGBA<Channel>, rhs: PremultipliedRGBA<Channel>) -> Bool {
         return lhs.red == rhs.red && lhs.green == rhs.green && lhs.blue == rhs.blue && lhs.alpha == rhs.alpha
     }
-    
+
     @inlinable
     public static func !=(lhs: PremultipliedRGBA<Channel>, rhs: PremultipliedRGBA<Channel>) -> Bool {
         return lhs.red != rhs.red || lhs.green != rhs.green || lhs.blue != rhs.blue || lhs.alpha != rhs.alpha

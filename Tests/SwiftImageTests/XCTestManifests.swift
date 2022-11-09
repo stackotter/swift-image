@@ -12,7 +12,7 @@ extension AnyImageTests {
         ("testSubscript", testSubscript),
         ("testSubscriptRange", testSubscriptRange),
         ("testXRange", testXRange),
-        ("testYRange", testYRange),
+        ("testYRange", testYRange)
     ]
 }
 
@@ -25,7 +25,7 @@ extension AppKitTests {
         ("testInitWithNSImagePerformance", testInitWithNSImagePerformance),
         ("testNSImage", testNSImage),
         ("testNSImagePerformance", testNSImagePerformance),
-        ("testNSImageTiffRepresentation", testNSImageTiffRepresentation),
+        ("testNSImageTiffRepresentation", testNSImageTiffRepresentation)
     ]
 }
 
@@ -35,7 +35,7 @@ extension AppUIKitTests {
     // to regenerate.
     static let __allTests__AppUIKitTests = [
         ("testJPEGData", testJPEGData),
-        ("testPNGData", testPNGData),
+        ("testPNGData", testPNGData)
     ]
 }
 
@@ -45,7 +45,7 @@ extension AutoreleaseTests {
     // to regenerate.
     static let __allTests__AutoreleaseTests = [
         ("testJPEGData", testJPEGData),
-        ("testPNGData", testPNGData),
+        ("testPNGData", testPNGData)
     ]
 }
 
@@ -56,7 +56,7 @@ extension ColorLiteralTests {
     static let __allTests__ColorLiteralTests = [
         ("testPremultipliedRGBAInitWithColorLiteral", testPremultipliedRGBAInitWithColorLiteral),
         ("testRGBAInitWithColorLiteral", testRGBAInitWithColorLiteral),
-        ("testRGBInitWithColorLiteral", testRGBInitWithColorLiteral),
+        ("testRGBInitWithColorLiteral", testRGBInitWithColorLiteral)
     ]
 }
 
@@ -65,7 +65,7 @@ extension ConvolutionTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__ConvolutionTests = [
-        ("testConvoluted", testConvoluted),
+        ("testConvoluted", testConvoluted)
     ]
 }
 
@@ -79,7 +79,7 @@ extension CoreGraphicsTests {
         ("testInitWithCGImagePerformance", testInitWithCGImagePerformance),
         ("testWithCGContext", testWithCGContext),
         ("testWithCGImage", testWithCGImage),
-        ("testWithCGImagePerformance", testWithCGImagePerformance),
+        ("testWithCGImagePerformance", testWithCGImagePerformance)
     ]
 }
 
@@ -89,7 +89,7 @@ extension ExtrapolationTests {
     // to regenerate.
     static let __allTests__ExtrapolationTests = [
         ("testSubscriptRangeWithExtrapolation", testSubscriptRangeWithExtrapolation),
-        ("testSubscriptWithExtrapolation", testSubscriptWithExtrapolation),
+        ("testSubscriptWithExtrapolation", testSubscriptWithExtrapolation)
     ]
 }
 
@@ -101,7 +101,7 @@ extension HigherOrderFunctionsTests {
         ("testMap", testMap),
         ("testMapPerformance", testMapPerformance),
         ("testUpdate", testUpdate),
-        ("testUpdatePerformance", testUpdatePerformance),
+        ("testUpdatePerformance", testUpdatePerformance)
     ]
 }
 
@@ -117,7 +117,7 @@ extension ImageOperatorsTests {
         ("testIsNotEqual", testIsNotEqual),
         ("testNegate", testNegate),
         ("testNot", testNot),
-        ("testSubtractAsign", testSubtractAsign),
+        ("testSubtractAsign", testSubtractAsign)
     ]
 }
 
@@ -131,7 +131,7 @@ extension ImageProtocolTests {
         ("testSlice", testSlice),
         ("testTransposed", testTransposed),
         ("testXReversed", testXReversed),
-        ("testYReversed", testYReversed),
+        ("testYReversed", testYReversed)
     ]
 }
 
@@ -143,7 +143,7 @@ extension ImageSliceTests {
         ("testInit", testInit),
         ("testPixel", testPixel),
         ("testSequence", testSequence),
-        ("testSubscriptRange", testSubscriptRange),
+        ("testSubscriptRange", testSubscriptRange)
     ]
 }
 
@@ -166,7 +166,7 @@ extension ImageTests {
         ("testWithUnsafeBufferPointer", testWithUnsafeBufferPointer),
         ("testWithUnsafeBytes", testWithUnsafeBytes),
         ("testWithUnsafeMutableBufferPointer", testWithUnsafeMutableBufferPointer),
-        ("testWithUnsafeMutableBytes", testWithUnsafeMutableBytes),
+        ("testWithUnsafeMutableBytes", testWithUnsafeMutableBytes)
     ]
 }
 
@@ -176,7 +176,7 @@ extension InterpolationTests {
     // to regenerate.
     static let __allTests__InterpolationTests = [
         ("testSubscriptInterpolation", testSubscriptInterpolation),
-        ("testSubscriptInterpolationWithExtrapolation", testSubscriptInterpolationWithExtrapolation),
+        ("testSubscriptInterpolationWithExtrapolation", testSubscriptInterpolationWithExtrapolation)
     ]
 }
 
@@ -186,7 +186,7 @@ extension PremultipliedRGBATests {
     // to regenerate.
     static let __allTests__PremultipliedRGBATests = [
         ("testInit", testInit),
-        ("testInitWithRGB", testInitWithRGB),
+        ("testInitWithRGB", testInitWithRGB)
     ]
 }
 
@@ -200,7 +200,7 @@ extension RGBAOperatorsTests {
         ("testAnd", testAnd),
         ("testNegate", testNegate),
         ("testNot", testNot),
-        ("testSubtractAsign", testSubtractAsign),
+        ("testSubtractAsign", testSubtractAsign)
     ]
 }
 
@@ -228,7 +228,7 @@ extension RGBATests {
         ("testPurple", testPurple),
         ("testRed", testRed),
         ("testWhite", testWhite),
-        ("testYellow", testYellow),
+        ("testYellow", testYellow)
     ]
 }
 
@@ -297,7 +297,7 @@ extension RGBTests {
         ("testSubtractionAssignment", testSubtractionAssignment),
         ("testWhite", testWhite),
         ("testYellow", testYellow),
-        ("testZero", testZero),
+        ("testZero", testZero)
     ]
 }
 
@@ -306,7 +306,7 @@ extension ResizingTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__ResizingTests = [
-        ("testResized", testResized),
+        ("testResized", testResized)
     ]
 }
 
@@ -315,7 +315,7 @@ extension RotationTests {
     //   `swift test --generate-linuxmain`
     // to regenerate.
     static let __allTests__RotationTests = [
-        ("testRotated", testRotated),
+        ("testRotated", testRotated)
     ]
 }
 
@@ -333,7 +333,7 @@ extension SwiftImageSample {
         ("testSample", testSample),
         ("testWithCoreGraphics", testWithCoreGraphics),
         ("testWithNSImage", testWithNSImage),
-        ("testWithUIImage", testWithUIImage),
+        ("testWithUIImage", testWithUIImage)
     ]
 }
 
@@ -359,7 +359,7 @@ public func __allTests() -> [XCTestCaseEntry] {
         testCase(RGBTests.__allTests__RGBTests),
         testCase(ResizingTests.__allTests__ResizingTests),
         testCase(RotationTests.__allTests__RotationTests),
-        testCase(SwiftImageSample.__allTests__SwiftImageSample),
+        testCase(SwiftImageSample.__allTests__SwiftImageSample)
     ]
 }
 #endif

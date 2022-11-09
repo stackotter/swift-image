@@ -1,9 +1,9 @@
-extension ImageProtocol where Pixel : _NumericPixel {
+extension Image where Pixel: _NumericPixel {
     @inlinable
-    public func convoluted<Kernel: ImageProtocol>(
-        with kernel: Kernel,
+    public func convoluted(
+        with kernel: Image<Int>,
         extrapolatedBy extrapolationMethod: ExtrapolationMethod<Pixel> = .edge
-    ) -> Image<Pixel> where Kernel.Pixel == Int {
+    ) -> Image<Pixel> {
         switch extrapolationMethod {
         case .constant(let value):
             return _convoluted(with: kernel) { x, y in
@@ -36,10 +36,10 @@ extension ImageProtocol where Pixel : _NumericPixel {
     }
 
     @inlinable
-    public func convoluted<Kernel: ImageProtocol>(
-        with kernel: Kernel,
+    public func convoluted(
+        with kernel: Image<Float>,
         extrapolatedBy extrapolationMethod: ExtrapolationMethod<Pixel> = .edge
-    ) -> Image<Pixel> where Kernel.Pixel == Float {
+    ) -> Image<Pixel> {
         switch extrapolationMethod {
         case .constant(let value):
             return _convoluted(with: kernel) { x, y in
@@ -72,10 +72,10 @@ extension ImageProtocol where Pixel : _NumericPixel {
     }
 
     @inlinable
-    public func convoluted<Kernel: ImageProtocol>(
-        with kernel: Kernel,
+    public func convoluted(
+        with kernel: Image<Double>,
         extrapolatedBy extrapolationMethod: ExtrapolationMethod<Pixel> = .edge
-    ) -> Image<Pixel> where Kernel.Pixel == Double {
+    ) -> Image<Pixel> {
         switch extrapolationMethod {
         case .constant(let value):
             return _convoluted(with: kernel) { x, y in
@@ -108,25 +108,25 @@ extension ImageProtocol where Pixel : _NumericPixel {
     }
 
     @usableFromInline
-    internal func _convoluted<Kernel: ImageProtocol>(
-        with kernel: Kernel,
+    internal func _convoluted(
+        with kernel: Image<Int>,
         pixelAt: (Int, Int) -> Pixel
-    ) -> Image<Pixel> where Kernel.Pixel == Int {
+    ) -> Image<Pixel> {
         precondition(kernel.width % 2 == 1, "The width of the `kernel` must be odd: \(kernel.width)")
         precondition(kernel.height % 2 == 1, "The height of the `kernel` must be odd: \(kernel.height)")
-        
+
         let xRange = self.xRange
         let yRange = self.yRange
-        
+
         let kxRange = kernel.xRange
         let kyRange = kernel.yRange
-        
+
         let hw = kxRange.count / 2  // halfWidth
         let hh = kyRange.count / 2 // halfHeight
-        
+
         var pixels: [Pixel] = []
         pixels.reserveCapacity(count)
-        
+
         for y in yRange {
             for x in xRange {
                 var weightedValues: [Pixel._ez_AdditiveInt] = []
@@ -142,30 +142,30 @@ extension ImageProtocol where Pixel : _NumericPixel {
                 pixels.append(Pixel.init(_ez_additiveInt: weightedValues.reduce(Pixel._ez_AdditiveInt.zero, +)))
             }
         }
-        
+
         return Image<Pixel>(width: width, height: height, pixels: pixels)
     }
 
     @usableFromInline
-    internal func _convoluted<Kernel: ImageProtocol>(
-        with kernel: Kernel,
+    internal func _convoluted(
+        with kernel: Image<Float>,
         pixelAt: (Int, Int) -> Pixel
-    ) -> Image<Pixel> where Kernel.Pixel == Float {
+    ) -> Image<Pixel> {
         precondition(kernel.width % 2 == 1, "The width of the `kernel` must be odd: \(kernel.width)")
         precondition(kernel.height % 2 == 1, "The height of the `kernel` must be odd: \(kernel.height)")
-        
+
         let xRange = self.xRange
         let yRange = self.yRange
-        
+
         let kxRange = kernel.xRange
         let kyRange = kernel.yRange
-        
+
         let hw = kxRange.count / 2  // halfWidth
         let hh = kyRange.count / 2 // halfHeight
-        
+
         var pixels: [Pixel] = []
         pixels.reserveCapacity(count)
-        
+
         for y in yRange {
             for x in xRange {
                 var weightedValues: [Pixel._ez_AdditiveFloat] = []
@@ -181,30 +181,30 @@ extension ImageProtocol where Pixel : _NumericPixel {
                 pixels.append(Pixel.init(_ez_additiveFloat: weightedValues.reduce(Pixel._ez_AdditiveFloat.zero, +)))
             }
         }
-        
+
         return Image<Pixel>(width: width, height: height, pixels: pixels)
     }
 
     @usableFromInline
-    internal func _convoluted<Kernel: ImageProtocol>(
-        with kernel: Kernel,
+    internal func _convoluted(
+        with kernel: Image<Double>,
         pixelAt: (Int, Int) -> Pixel
-    ) -> Image<Pixel> where Kernel.Pixel == Double {
+    ) -> Image<Pixel> {
         precondition(kernel.width % 2 == 1, "The width of the `kernel` must be odd: \(kernel.width)")
         precondition(kernel.height % 2 == 1, "The height of the `kernel` must be odd: \(kernel.height)")
-        
+
         let xRange = self.xRange
         let yRange = self.yRange
-        
+
         let kxRange = kernel.xRange
         let kyRange = kernel.yRange
-        
+
         let hw = kxRange.count / 2  // halfWidth
         let hh = kyRange.count / 2 // halfHeight
-        
+
         var pixels: [Pixel] = []
         pixels.reserveCapacity(count)
-        
+
         for y in yRange {
             for x in xRange {
                 var weightedValues: [Pixel._ez_AdditiveDouble] = []
@@ -220,7 +220,7 @@ extension ImageProtocol where Pixel : _NumericPixel {
                 pixels.append(Pixel.init(_ez_additiveDouble: weightedValues.reduce(Pixel._ez_AdditiveDouble.zero, +)))
             }
         }
-        
+
         return Image<Pixel>(width: width, height: height, pixels: pixels)
     }
 }

@@ -6,7 +6,7 @@ public struct RGB<Channel> {
     @usableFromInline
     internal let padding: Channel
     #endif
-    
+
     @inlinable
     public init(red: Channel, green: Channel, blue: Channel) {
         self.red = red
@@ -32,12 +32,12 @@ extension RGB where Channel == UInt8 {
     }
 }
 
-extension RGB where Channel : _NumericPixel & UnsignedInteger & FixedWidthInteger, Channel._ez_AdditiveInt : FixedWidthInteger {
+extension RGB where Channel: _NumericPixel & UnsignedInteger & FixedWidthInteger, Channel._ez_AdditiveInt: FixedWidthInteger {
     @inlinable
     public init(_ rgba: RGBA<Channel>) {
         let numericAlpha: Channel._ez_AdditiveInt = rgba.alpha._ez_additiveInt
         let numericMaxAlpha: Channel._ez_AdditiveInt = Channel.max._ez_additiveInt
-        
+
         self.init(
             red: .init(_ez_additiveInt: rgba.red._ez_additiveInt * numericAlpha / numericMaxAlpha),
             green: .init(_ez_additiveInt: rgba.green._ez_additiveInt * numericAlpha / numericMaxAlpha),
@@ -46,7 +46,7 @@ extension RGB where Channel : _NumericPixel & UnsignedInteger & FixedWidthIntege
     }
 }
 
-extension RGB where Channel : FloatingPoint {
+extension RGB where Channel: FloatingPoint {
     @inlinable
     public init(_ rgba: RGBA<Channel>) {
         self.init(
@@ -131,52 +131,52 @@ extension RGB where Channel: UnsignedInteger & FixedWidthInteger {
     public static var red: RGB<Channel> {
         return RGB<Channel>(red: .max, green: .zero, blue: .zero)
     }
-    
+
     @inlinable
     public static var green: RGB<Channel> {
         return RGB<Channel>(red: .zero, green: .max, blue: .zero)
     }
-    
+
     @inlinable
     public static var blue: RGB<Channel> {
         return RGB<Channel>(red: .zero, green: .zero, blue: .max)
     }
-    
+
     @inlinable
     public static var cyan: RGB<Channel> {
         return RGB<Channel>(red: .zero, green: .max, blue: .max)
     }
-    
+
     @inlinable
     public static var magenta: RGB<Channel> {
         return RGB<Channel>(red: .max, green: .zero, blue: .max)
     }
-    
+
     @inlinable
     public static var yellow: RGB<Channel> {
         return RGB<Channel>(red: .max, green: .max, blue: .zero)
     }
-    
+
     @inlinable
     public static var black: RGB<Channel> {
         return RGB<Channel>(red: .zero, green: .zero, blue: .zero)
     }
-    
+
     @inlinable
     public static var white: RGB<Channel> {
         return RGB<Channel>(red: .max, green: .max, blue: .max)
     }
-    
+
     @inlinable
     public static var gray: RGB<Channel> {
         return RGB<Channel>(red: .max / 2, green: .max / 2, blue: .max / 2)
     }
-    
+
     @inlinable
     public static var orange: RGB<Channel> {
         return RGB<Channel>(red: .max, green: .max / 2, blue: .zero)
     }
-    
+
     @inlinable
     public static var purple: RGB<Channel> {
         return RGB<Channel>(red: .max / 2, green: .zero, blue: .max / 2)
@@ -188,52 +188,52 @@ extension RGB where Channel: FloatingPoint {
     public static var red: RGB<Channel> {
         return RGB<Channel>(red: 1, green: 0, blue: 0)
     }
-    
+
     @inlinable
     public static var green: RGB<Channel> {
         return RGB<Channel>(red: 0, green: 1, blue: 0)
     }
-    
+
     @inlinable
     public static var blue: RGB<Channel> {
         return RGB<Channel>(red: 0, green: 0, blue: 1)
     }
-    
+
     @inlinable
     public static var cyan: RGB<Channel> {
         return RGB<Channel>(red: 0, green: 1, blue: 1)
     }
-    
+
     @inlinable
     public static var magenta: RGB<Channel> {
         return RGB<Channel>(red: 1, green: 0, blue: 1)
     }
-    
+
     @inlinable
     public static var yellow: RGB<Channel> {
         return RGB<Channel>(red: 1, green: 1, blue: 0)
     }
-    
+
     @inlinable
     public static var black: RGB<Channel> {
         return RGB<Channel>(red: 0, green: 0, blue: 0)
     }
-    
+
     @inlinable
     public static var white: RGB<Channel> {
         return RGB<Channel>(red: 1, green: 1, blue: 1)
     }
-    
+
     @inlinable
     public static var gray: RGB<Channel> {
         return RGB<Channel>(red: 1 / 2, green: 1 / 2, blue: 1 / 2)
     }
-    
+
     @inlinable
     public static var orange: RGB<Channel> {
         return RGB<Channel>(red: 1, green: 1 / 2, blue: 0)
     }
-    
+
     @inlinable
     public static var purple: RGB<Channel> {
         return RGB<Channel>(red: 1 / 2, green: 0, blue: 1 / 2)
@@ -265,19 +265,19 @@ extension RGB {
     }
 }
 
-extension RGB : Equatable where Channel : Equatable {
+extension RGB: Equatable where Channel: Equatable {
     @inlinable
     public static func ==(lhs: RGB<Channel>, rhs: RGB<Channel>) -> Bool {
         return lhs.red == rhs.red && lhs.green == rhs.green && lhs.blue == rhs.blue
     }
-    
+
     @inlinable
     public static func !=(lhs: RGB<Channel>, rhs: RGB<Channel>) -> Bool {
         return lhs.red != rhs.red || lhs.green != rhs.green || lhs.blue != rhs.blue
     }
 }
 
-extension RGB : CustomStringConvertible {
+extension RGB: CustomStringConvertible {
     public var description: String {
         if let zelf = self as? RGB<UInt8> {
             return String(format: "#%02X%02X%02X", arguments: [zelf.red, zelf.green, zelf.blue])
@@ -287,7 +287,7 @@ extension RGB : CustomStringConvertible {
     }
 }
 
-extension RGB : CustomDebugStringConvertible {
+extension RGB: CustomDebugStringConvertible {
     public var debugDescription: String {
         return description
     }
@@ -297,29 +297,29 @@ extension RGB: AdditiveArithmetic where Channel: AdditiveArithmetic {
     @inlinable
     public static var zero: RGB<Channel> {
         return RGB<Channel>(
-            red  : .zero,
+            red: .zero,
             green: .zero,
-            blue : .zero
+            blue: .zero
         )
     }
-    
+
     @inlinable
     public static func +(_ lhs: RGB<Channel>, _ rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red + rhs.red, green: lhs.green + rhs.green, blue: lhs.blue + rhs.blue)
     }
-    
+
     @inlinable
     public static func +=(_ lhs: inout RGB<Channel>, _ rhs: RGB<Channel>) {
         lhs.red   += rhs.red
         lhs.green += rhs.green
         lhs.blue  += rhs.blue
     }
-    
+
     @inlinable
     public static func -(_ lhs: RGB<Channel>, _ rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red - rhs.red, green: lhs.green - rhs.green, blue: lhs.blue - rhs.blue)
     }
-    
+
     @inlinable
     public static func -=(_ lhs: inout RGB<Channel>, _ rhs: RGB<Channel>) {
         lhs.red   -= rhs.red
@@ -354,7 +354,7 @@ extension RGB where Channel: BinaryInteger {
     public static func /(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red / rhs.red, green: lhs.green / rhs.green, blue: lhs.blue / rhs.blue)
     }
-    
+
     @inlinable
     public static func /=(lhs: inout RGB<Channel>, rhs: RGB<Channel>) {
         lhs.red   /= rhs.red
@@ -366,7 +366,7 @@ extension RGB where Channel: BinaryInteger {
     public static func %(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red % rhs.red, green: lhs.green % rhs.green, blue: lhs.blue % rhs.blue)
     }
-    
+
     @inlinable
     public static func %=(lhs: inout RGB<Channel>, rhs: RGB<Channel>) {
         lhs.red   %= rhs.red
@@ -378,7 +378,7 @@ extension RGB where Channel: BinaryInteger {
     public static func &(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red & rhs.red, green: lhs.green & rhs.green, blue: lhs.blue & rhs.blue)
     }
-    
+
     @inlinable
     public static func &=(lhs: inout RGB<Channel>, rhs: RGB<Channel>) {
         lhs.red   &= rhs.red
@@ -390,7 +390,7 @@ extension RGB where Channel: BinaryInteger {
     public static func |(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red | rhs.red, green: lhs.green | rhs.green, blue: lhs.blue | rhs.blue)
     }
-    
+
     @inlinable
     public static func |=(lhs: inout RGB<Channel>, rhs: RGB<Channel>) {
         lhs.red   |= rhs.red
@@ -402,7 +402,7 @@ extension RGB where Channel: BinaryInteger {
     public static func ^(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red ^ rhs.red, green: lhs.green ^ rhs.green, blue: lhs.blue ^ rhs.blue)
     }
-    
+
     @inlinable
     public static func ^=(lhs: inout RGB<Channel>, rhs: RGB<Channel>) {
         lhs.red   ^= rhs.red
@@ -414,12 +414,12 @@ extension RGB where Channel: BinaryInteger {
     public static prefix func ~(lhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: ~lhs.red, green: ~lhs.green, blue: ~lhs.blue)
     }
-    
+
     @inlinable
     public static func << <RHSChannel: BinaryInteger>(lhs: RGB<Channel>, rhs: RGB<RHSChannel>) -> RGB<Channel> {
         return RGB(red: lhs.red << rhs.red, green: lhs.green << rhs.green, blue: lhs.blue << rhs.blue)
     }
-    
+
     @inlinable
     public static func <<= <RHSChannel: BinaryInteger>(lhs: inout RGB<Channel>, rhs: RGB<RHSChannel>) {
         lhs.red   <<= rhs.red
@@ -431,7 +431,7 @@ extension RGB where Channel: BinaryInteger {
     public static func >> <RHSChannel: BinaryInteger>(lhs: RGB<Channel>, rhs: RGB<RHSChannel>) -> RGB<Channel> {
         return RGB(red: lhs.red >> rhs.red, green: lhs.green >> rhs.green, blue: lhs.blue >> rhs.blue)
     }
-    
+
     @inlinable
     public static func >>= <RHSChannel: BinaryInteger>(lhs: inout RGB<Channel>, rhs: RGB<RHSChannel>) {
         lhs.red   >>= rhs.red
@@ -445,7 +445,7 @@ extension RGB where Channel: FixedWidthInteger {
     public static func &+(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red &+ rhs.red, green: lhs.green &+ rhs.green, blue: lhs.blue &+ rhs.blue)
     }
-    
+
     @inlinable
     public static func &+=(_ lhs: inout RGB<Channel>, _ rhs: RGB<Channel>) {
         lhs.red   &+= rhs.red
@@ -457,7 +457,7 @@ extension RGB where Channel: FixedWidthInteger {
     public static func &-(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red &- rhs.red, green: lhs.green &- rhs.green, blue: lhs.blue &- rhs.blue)
     }
-    
+
     @inlinable
     public static func &-=(_ lhs: inout RGB<Channel>, _ rhs: RGB<Channel>) {
         lhs.red   &-= rhs.red
@@ -469,7 +469,7 @@ extension RGB where Channel: FixedWidthInteger {
     public static func &*(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red &* rhs.red, green: lhs.green &* rhs.green, blue: lhs.blue &* rhs.blue)
     }
-    
+
     @inlinable
     public static func &*=(_ lhs: inout RGB<Channel>, _ rhs: RGB<Channel>) {
         lhs.red   &*= rhs.red
@@ -481,7 +481,7 @@ extension RGB where Channel: FixedWidthInteger {
     public static func &<<(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red &<< rhs.red, green: lhs.green &<< rhs.green, blue: lhs.blue &<< rhs.blue)
     }
-    
+
     @inlinable
     public static func &<<=(lhs: inout RGB<Channel>, rhs: RGB<Channel>) {
         lhs.red   &<<= rhs.red
@@ -493,7 +493,7 @@ extension RGB where Channel: FixedWidthInteger {
     public static func &>>(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red &>> rhs.red, green: lhs.green &>> rhs.green, blue: lhs.blue &>> rhs.blue)
     }
-    
+
     @inlinable
     public static func &>>=(lhs: inout RGB<Channel>, rhs: RGB<Channel>) {
         lhs.red   &>>= rhs.red
@@ -507,7 +507,7 @@ extension RGB where Channel: FloatingPoint {
     public static func /(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red / rhs.red, green: lhs.green / rhs.green, blue: lhs.blue / rhs.blue)
     }
-    
+
     @inlinable
     public static func /=(lhs: inout RGB<Channel>, rhs: RGB<Channel>) {
         lhs.red   /= rhs.red
@@ -521,17 +521,17 @@ extension RGB where Channel: Comparable {
     public static func <(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Bool> {
         return RGB<Bool>(red: lhs.red < rhs.red, green: lhs.green < rhs.green, blue: lhs.blue < rhs.blue)
     }
-    
+
     @inlinable
     public static func <=(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Bool> {
         return RGB<Bool>(red: lhs.red <= rhs.red, green: lhs.green <= rhs.green, blue: lhs.blue <= rhs.blue)
     }
-    
+
     @inlinable
     public static func >(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Bool> {
         return RGB<Bool>(red: lhs.red > rhs.red, green: lhs.green > rhs.green, blue: lhs.blue > rhs.blue)
     }
-    
+
     @inlinable
     public static func >=(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Bool> {
         return RGB<Bool>(red: lhs.red >= rhs.red, green: lhs.green >= rhs.green, blue: lhs.blue >= rhs.blue)
@@ -543,12 +543,12 @@ extension RGB where Channel == Bool {
     public static func &&(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red && rhs.red, green: lhs.green && rhs.green, blue: lhs.blue && rhs.blue)
     }
-    
+
     @inlinable
     public static func ||(lhs: RGB<Channel>, rhs: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: lhs.red || rhs.red, green: lhs.green || rhs.green, blue: lhs.blue || rhs.blue)
     }
-    
+
     @inlinable
     public static prefix func !(a: RGB<Channel>) -> RGB<Channel> {
         return RGB(red: !a.red, green: !a.green, blue: !a.blue)

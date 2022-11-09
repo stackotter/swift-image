@@ -1,11 +1,11 @@
 import Foundation
 
-extension ImageProtocol {
+extension Image {
     public func resizedTo(width: Int, height: Int) -> Image<Pixel> {
         if width == 0 || height == 0 {
             return Image<Pixel>(width: width, height: height, pixels: [])
         }
-        
+
         let ox = xRange.lowerBound
         let oy = yRange.lowerBound
         if ox == 0 && oy == 0 {
@@ -16,7 +16,7 @@ extension ImageProtocol {
             return resizedByInterpolationTo(width: width, height: height) { x, y in self[Int(round(dox + x)), Int(round(doy + y)), extrapolation: .edge] }
         }
     }
-    
+
     private func resizedByInterpolationTo(width: Int, height: Int, pixelAt: (Double, Double) -> Pixel) -> Image<Pixel> {
         let sx = Double(xRange.count) / Double(width)
         let sy = Double(yRange.count) / Double(height)
@@ -26,7 +26,7 @@ extension ImageProtocol {
     }
 }
 
-extension ImageProtocol where Pixel : _NumericPixel {
+extension Image where Pixel: _NumericPixel {
     public func resizedTo(width: Int, height: Int) -> Image<Pixel> {
         let ox = xRange.lowerBound
         let oy = yRange.lowerBound
@@ -50,7 +50,7 @@ extension ImageProtocol where Pixel : _NumericPixel {
             )
         }
     }
-    
+
     public func resizedTo(width: Int, height: Int, interpolatedBy interpolationMethod: InterpolationMethod) -> Image<Pixel> {
         let ox = xRange.lowerBound
         let oy = yRange.lowerBound
@@ -80,7 +80,8 @@ extension ImageProtocol where Pixel : _NumericPixel {
             )
         }
     }
-    
+
+    @_specialize(exported: true, where Pixel==RGBA<UInt8>)
     private func resizedTo(
         width: Int,
         height: Int,
@@ -91,28 +92,24 @@ extension ImageProtocol where Pixel : _NumericPixel {
         if width == 0 || height == 0 {
             return Image<Pixel>(width: width, height: height, pixels: [])
         }
-        
+
         let xRange = self.xRange
         let yRange = self.yRange
-        
+
         if width == xRange.count && height == yRange.count {
-            if let image = self as? Image<Pixel> {
-                return image
-            } else {
-                return Image<Pixel>(self)
-            }
+            return self
         }
-        
+
         let isTargetWidthLarger = width >= xRange.count
         let isTargetHeightLarger = height >= yRange.count
-        
+
         if !isAntialiased || (isTargetWidthLarger && isTargetHeightLarger) {
             return resizedByInterpolationTo(width: width, height: height, pixelAt: extrapolatedPixelAt)
         }
-        
+
         let targetWidth = isTargetWidthLarger ? width : (xRange.count / width) * width
         let targetHeight = isTargetHeightLarger ? height : (yRange.count / height) * height
-        
+
         let multiple: Image<Pixel>
         if width < xRange.count && height < yRange.count {
             multiple = resizedByInterpolationTo(width: targetWidth, height: targetHeight, pixelAt: pixelAt)
@@ -124,24 +121,24 @@ extension ImageProtocol where Pixel : _NumericPixel {
             height: height
         )
     }
-    
+
     private func resizedByMeanTo(width: Int, height: Int) -> Image<Pixel> {
         let xRange = self.xRange
         let yRange = self.yRange
-        
+
         assert(width <= xRange.count && xRange.count % width == 0)
         assert(height <= yRange.count && yRange.count % height == 0)
-        
+
         let sx = xRange.count / width
         let sy = yRange.count / height
         let n = sx * sy
-        
+
         var pixels = [Pixel]()
         for y in 0..<height {
             let by = y * sy
             for x in 0..<width {
                 let bx = x * sx
-                
+
                 var pixel = Pixel._ez_AdditiveInt.zero
                 for dy in 0..<sy {
                     for dx in 0..<sx {
@@ -151,7 +148,7 @@ extension ImageProtocol where Pixel : _NumericPixel {
                 pixels.append(Pixel.init(_ez_additiveInt: Pixel._ez_quotientInt(pixel, n)))
             }
         }
-        
+
         return Image<Pixel>(width: width, height: height, pixels: pixels)
     }
 }
